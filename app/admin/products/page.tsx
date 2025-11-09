@@ -68,20 +68,20 @@ export default function AdminProductsPage() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
             <div>
-              <h1 className="text-3xl font-bold mb-2">Products Management</h1>
-              <p className="text-gray-600">
+              <h1 className="text-2xl sm:text-3xl font-bold mb-2">Products Management</h1>
+              <p className="text-gray-600 text-sm sm:text-base">
                 Manage your product catalog - {products.length} total products
               </p>
             </div>
-            <Link href="/admin/products/new">
-              <Button>➕ Add New Product</Button>
+            <Link href="/admin/products/new" className="w-full sm:w-auto">
+              <Button className="w-full sm:w-auto">➕ Add New Product</Button>
             </Link>
           </div>
 
           {/* Search and Filter */}
-          <div className="flex gap-4 mb-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4">
             <input
               type="text"
               placeholder="Search products by name or SKU..."
@@ -92,7 +92,7 @@ export default function AdminProductsPage() {
             <select
               value={filterCategory}
               onChange={(e) => setFilterCategory(e.target.value)}
-              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 w-full sm:w-auto"
             >
               <option value="">All Categories</option>
               {categories.map((cat) => (
@@ -104,7 +104,7 @@ export default function AdminProductsPage() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <Card>
               <CardBody className="text-center">
                 <div className="text-2xl font-bold text-blue-600">{products.length}</div>

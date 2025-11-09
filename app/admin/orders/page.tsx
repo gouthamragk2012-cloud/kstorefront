@@ -80,25 +80,25 @@ export default function AdminOrdersPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-8">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
             <div>
-              <h1 className="text-3xl font-bold mb-2">Orders Management</h1>
-              <p className="text-gray-600">View and manage customer orders</p>
+              <h1 className="text-2xl sm:text-3xl font-bold mb-2">Orders Management</h1>
+              <p className="text-gray-600 text-sm sm:text-base">View and manage customer orders</p>
             </div>
-            <Link href="/admin">
-              <button className="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition">
+            <Link href="/admin" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition">
                 ← Back to Dashboard
               </button>
             </Link>
           </div>
 
           {/* Filters */}
-          <div className="flex gap-4 items-center">
-            <label className="font-semibold">Filter by Status:</label>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-center">
+            <label className="font-semibold text-sm sm:text-base">Filter by Status:</label>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="border rounded-lg px-4 py-2"
+              className="border rounded-lg px-4 py-2 w-full sm:w-auto"
             >
               <option value="">All Orders</option>
               <option value="pending">Pending</option>

@@ -111,13 +111,13 @@ export default function AdminUsersPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-8">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
             <div>
-              <h1 className="text-3xl font-bold mb-2">Customer Management</h1>
-              <p className="text-gray-600">View and manage customer accounts</p>
+              <h1 className="text-2xl sm:text-3xl font-bold mb-2">Customer Management</h1>
+              <p className="text-gray-600 text-sm sm:text-base">View and manage customer accounts</p>
             </div>
-            <Link href="/admin">
-              <button className="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition">
+            <Link href="/admin" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition">
                 ← Back to Dashboard
               </button>
             </Link>

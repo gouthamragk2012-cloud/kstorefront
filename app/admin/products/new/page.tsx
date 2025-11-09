@@ -239,16 +239,16 @@ export default function NewProductPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <div className="mb-8 flex justify-between items-center">
+        <div className="mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Add New Product</h1>
-            <p className="text-gray-600">Create a new product with complete information</p>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">Add New Product</h1>
+            <p className="text-gray-600 text-sm sm:text-base">Create a new product with complete information</p>
           </div>
           <Button
             type="button"
             variant="outline"
             onClick={generateRandomProduct}
-            className="flex items-center gap-2"
+            className="w-full sm:w-auto flex items-center gap-2"
           >
             <span>🎲</span>
             <span>Random</span>

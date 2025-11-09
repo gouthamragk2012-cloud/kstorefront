@@ -99,15 +99,15 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header with View Store Button */}
         <div className="mb-8">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
             <div>
-              <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
-              <p className="text-gray-600">
+              <h1 className="text-2xl sm:text-3xl font-bold mb-2">Admin Dashboard</h1>
+              <p className="text-gray-600 text-sm sm:text-base">
                 Welcome back, {user?.first_name}! Manage your store from here.
               </p>
             </div>
-            <Link href="/">
-              <button className="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition shadow-lg flex items-center gap-2">
+            <Link href="/" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition shadow-lg flex items-center justify-center gap-2">
                 <span className="text-xl">🏪</span>
                 <span>View Store</span>
               </button>
@@ -120,41 +120,41 @@ export default function AdminDashboard() {
           <Card className="border-l-4 border-blue-500">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="text-4xl">📦</div>
+                <div className="text-3xl sm:text-4xl">📦</div>
                 <div>
-                  <h3 className="text-2xl font-bold">Products Management</h3>
-                  <p className="text-gray-600">Manage your product catalog</p>
+                  <h3 className="text-xl sm:text-2xl font-bold">Products Management</h3>
+                  <p className="text-gray-600 text-sm sm:text-base">Manage your product catalog</p>
                 </div>
               </div>
             </CardHeader>
             <CardBody>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 <Link href="/admin/products">
-                  <button className="w-full flex flex-col items-center gap-2 p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition border-2 border-blue-200 hover:border-blue-400">
-                    <span className="text-3xl">👁️</span>
-                    <span className="font-semibold text-blue-900">View All</span>
-                    <span className="text-xs text-blue-600">Browse products</span>
+                  <button className="w-full flex flex-col items-center gap-1 sm:gap-2 p-3 sm:p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition border-2 border-blue-200 hover:border-blue-400">
+                    <span className="text-2xl sm:text-3xl">👁️</span>
+                    <span className="font-semibold text-blue-900 text-sm sm:text-base">View All</span>
+                    <span className="text-xs text-blue-600 hidden sm:inline">Browse products</span>
                   </button>
                 </Link>
                 <Link href="/admin/products/new">
-                  <button className="w-full flex flex-col items-center gap-2 p-4 bg-green-50 hover:bg-green-100 rounded-lg transition border-2 border-green-200 hover:border-green-400">
-                    <span className="text-3xl">➕</span>
-                    <span className="font-semibold text-green-900">Create</span>
-                    <span className="text-xs text-green-600">Add new product</span>
+                  <button className="w-full flex flex-col items-center gap-1 sm:gap-2 p-3 sm:p-4 bg-green-50 hover:bg-green-100 rounded-lg transition border-2 border-green-200 hover:border-green-400">
+                    <span className="text-2xl sm:text-3xl">➕</span>
+                    <span className="font-semibold text-green-900 text-sm sm:text-base">Create</span>
+                    <span className="text-xs text-green-600 hidden sm:inline">Add new product</span>
                   </button>
                 </Link>
                 <Link href="/admin/products">
-                  <button className="w-full flex flex-col items-center gap-2 p-4 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition border-2 border-yellow-200 hover:border-yellow-400">
-                    <span className="text-3xl">✏️</span>
-                    <span className="font-semibold text-yellow-900">Edit</span>
-                    <span className="text-xs text-yellow-600">Update details</span>
+                  <button className="w-full flex flex-col items-center gap-1 sm:gap-2 p-3 sm:p-4 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition border-2 border-yellow-200 hover:border-yellow-400">
+                    <span className="text-2xl sm:text-3xl">✏️</span>
+                    <span className="font-semibold text-yellow-900 text-sm sm:text-base">Edit</span>
+                    <span className="text-xs text-yellow-600 hidden sm:inline">Update details</span>
                   </button>
                 </Link>
                 <Link href="/admin/products">
-                  <button className="w-full flex flex-col items-center gap-2 p-4 bg-red-50 hover:bg-red-100 rounded-lg transition border-2 border-red-200 hover:border-red-400">
-                    <span className="text-3xl">🗑️</span>
-                    <span className="font-semibold text-red-900">Delete</span>
-                    <span className="text-xs text-red-600">Remove items</span>
+                  <button className="w-full flex flex-col items-center gap-1 sm:gap-2 p-3 sm:p-4 bg-red-50 hover:bg-red-100 rounded-lg transition border-2 border-red-200 hover:border-red-400">
+                    <span className="text-2xl sm:text-3xl">🗑️</span>
+                    <span className="font-semibold text-red-900 text-sm sm:text-base">Delete</span>
+                    <span className="text-xs text-red-600 hidden sm:inline">Remove items</span>
                   </button>
                 </Link>
               </div>
@@ -163,7 +163,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Main Sections Grid */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
           {adminSections.map((section) => {
             const borderColor = 
               section.color === 'blue' ? 'border-blue-500' :
@@ -203,7 +203,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 mb-8">
           <Card>
             <CardHeader>
               <h2 className="text-xl font-bold">🚀 Quick Actions</h2>
@@ -292,16 +292,16 @@ export default function AdminDashboard() {
         {/* Help Section */}
         <Card className="bg-gradient-to-r from-blue-50 to-purple-50">
           <CardBody>
-            <div className="flex items-center gap-4">
-              <div className="text-4xl">💡</div>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="text-3xl sm:text-4xl">💡</div>
               <div className="flex-1">
-                <h3 className="font-bold text-lg mb-1">Need Help?</h3>
-                <p className="text-gray-600">
+                <h3 className="font-bold text-base sm:text-lg mb-1">Need Help?</h3>
+                <p className="text-gray-600 text-sm sm:text-base">
                   Start by adding products to your catalog. Click the "Add Product" button above or navigate to Products section.
                 </p>
               </div>
-              <Link href="/admin/products/new">
-                <button className="bg-white px-6 py-2 rounded-lg font-semibold hover:shadow-md transition">
+              <Link href="/admin/products/new" className="w-full sm:w-auto">
+                <button className="w-full sm:w-auto bg-white px-6 py-2 rounded-lg font-semibold hover:shadow-md transition">
                   Get Started
                 </button>
               </Link>

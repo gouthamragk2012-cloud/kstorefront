@@ -214,12 +214,12 @@ export default function EditProductPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <div className="mb-8 flex justify-between items-center">
+        <div className="mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Edit Product</h1>
-            <p className="text-gray-600">Update product information</p>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">Edit Product</h1>
+            <p className="text-gray-600 text-sm sm:text-base">Update product information</p>
           </div>
-          <Button variant="danger" onClick={handleDelete}>
+          <Button variant="danger" onClick={handleDelete} className="w-full sm:w-auto">
             🗑️ Delete Product
           </Button>
         </div>
