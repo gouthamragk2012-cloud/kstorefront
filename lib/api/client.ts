@@ -67,10 +67,17 @@ class ApiClient {
   }
 
   async post<T>(endpoint: string, data?: any, token?: string): Promise<T> {
+    const headers: any = {};
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+    
+    console.log('POST request:', { endpoint, hasToken: !!token, headers });
+    
     return this.request<T>(endpoint, {
       method: 'POST',
       body: data ? JSON.stringify(data) : undefined,
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      headers,
     });
   }
 

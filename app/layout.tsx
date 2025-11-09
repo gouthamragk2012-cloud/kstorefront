@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import Navbar from '@/components/Navbar';
+import PhoneNumberBanner from '@/components/PhoneNumberBanner';
 
 export const metadata: Metadata = {
   title: {
@@ -47,6 +48,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
         <Navbar />
+        <PhoneNumberBanner />
         <main className="min-h-screen">{children}</main>
       </body>
     </html>

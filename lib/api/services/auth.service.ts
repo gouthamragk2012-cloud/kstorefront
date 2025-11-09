@@ -15,19 +15,27 @@ export interface RegisterData {
 export interface AuthResponse {
   access_token: string;
   user: {
-    id: number;
+    user_id: number;
+    id?: number;
     email: string;
     first_name: string;
     last_name: string;
+    role: 'customer' | 'admin';
   };
 }
 
 export const authService = {
-  login: (credentials: LoginCredentials) =>
-    apiClient.post<AuthResponse>('/auth/login', credentials),
+  login: async (credentials: LoginCredentials) => {
+    const response: any = await apiClient.post('/auth/login', credentials);
+    // Backend wraps response in 'data' field
+    return response.data || response;
+  },
 
-  register: (data: RegisterData) =>
-    apiClient.post<AuthResponse>('/auth/register', data),
+  register: async (data: RegisterData) => {
+    const response: any = await apiClient.post('/auth/register', data);
+    // Backend wraps response in 'data' field
+    return response.data || response;
+  },
 
   logout: (token: string) =>
     apiClient.post('/auth/logout', {}, token),

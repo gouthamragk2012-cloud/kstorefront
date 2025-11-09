@@ -4,10 +4,12 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface User {
-  id: number;
+  user_id: number;
+  id?: number;
   email: string;
   first_name: string;
   last_name: string;
+  role: 'customer' | 'admin';
 }
 
 interface AuthState {
@@ -31,6 +33,7 @@ export const useAuth = create<AuthState>()(
     }),
     {
       name: 'auth-storage',
+      skipHydration: false,
     }
   )
 );

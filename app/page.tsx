@@ -3,46 +3,96 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { productService, categoryService } from '@/lib/api';
+import { useAuth } from '@/lib/hooks/useAuth';
 import type { Product, Category } from '@/lib/types';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 
 export default function Home() {
+  const { user, isAuthenticated } = useAuth();
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
+  const isAdmin = isAuthenticated && user?.role === 'admin';
 
   useEffect(() => {
-    Promise.all([
-      productService.getAll({ is_featured: true }),
-      categoryService.getAll()
-    ])
-      .then(([productsRes, categoriesRes]) => {
-        const products = productsRes.data || productsRes;
-        const cats = categoriesRes.data || categoriesRes;
-        setFeaturedProducts(Array.isArray(products) ? products.slice(0, 4) : []);
-        setCategories(Array.isArray(cats) ? cats : []);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Error loading data:', err);
-        setLoading(false);
-      });
+    setMounted(true);
   }, []);
+
+  useEffect(() => {
+    // Load data for all users (including admins)
+    if (mounted) {
+      Promise.all([
+        productService.getAll({ is_featured: true }),
+        categoryService.getAll()
+      ])
+        .then(([productsRes, categoriesRes]) => {
+          const products = productsRes.data || productsRes;
+          const cats = categoriesRes.data || categoriesRes;
+          setFeaturedProducts(Array.isArray(products) ? products.slice(0, 4) : []);
+          setCategories(Array.isArray(cats) ? cats : []);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error('Error loading data:', err);
+          setLoading(false);
+        });
+    }
+  }, [mounted]);
 
   return (
     <main className="min-h-screen">
+      {/* Admin Quick Access Banner */}
+      {isAdmin && (
+        <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-4">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">👨‍💼</span>
+                <div>
+                  <div className="font-semibold">Admin Mode</div>
+                  <div className="text-sm text-blue-100">Welcome back, {user?.first_name}!</div>
+                </div>
+              </div>
+              <div className="flex gap-3">
+                <Link href="/admin">
+                  <button className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-50 transition">
+                    📊 Dashboard
+                  </button>
+                </Link>
+                <Link href="/admin/products/new">
+                  <button className="bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-400 transition">
+                    ➕ Add Product
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-4">Welcome to KStore</h1>
           <p className="text-xl mb-8">Your modern ecommerce solution</p>
-          <Link 
-            href="/products" 
-            className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 inline-block"
-          >
-            Shop Now
-          </Link>
+          <div className="flex gap-4 justify-center">
+            <Link 
+              href="/products" 
+              className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 inline-block"
+            >
+              Shop Now
+            </Link>
+            {isAdmin && (
+              <Link 
+                href="/admin" 
+                className="bg-blue-800 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-900 inline-block border-2 border-white"
+              >
+                Admin Panel
+              </Link>
+            )}
+          </div>
         </div>
       </div>
 

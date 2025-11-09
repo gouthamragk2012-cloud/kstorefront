@@ -28,9 +28,24 @@ export default function RegisterPage() {
 
     try {
       const response = await authService.register(formData);
+      console.log('Register response:', response);
+      
+      if (!response.user) {
+        throw new Error('Invalid response from server');
+      }
+      
       setAuth(response.user, response.access_token);
-      router.push('/');
+      
+      // Redirect to verification page for customers
+      if (response.user?.role === 'customer' && !response.user?.is_verified) {
+        router.push('/verify-email');
+      } else if (response.user?.role === 'admin') {
+        router.push('/admin');
+      } else {
+        router.push('/');
+      }
     } catch (err: any) {
+      console.error('Register error:', err);
       setError(err.message || 'Registration failed');
     } finally {
       setLoading(false);

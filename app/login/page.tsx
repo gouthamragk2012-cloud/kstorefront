@@ -26,9 +26,32 @@ export default function LoginPage() {
 
     try {
       const response = await authService.login(formData);
+      console.log('Full login response:', response);
+      console.log('User data:', response.user);
+      console.log('Access token:', response.access_token);
+      
+      if (!response.user || !response.access_token) {
+        console.error('Missing user or token in response');
+        throw new Error('Invalid response from server');
+      }
+      
+      // Save auth data
       setAuth(response.user, response.access_token);
-      router.push('/');
+      console.log('Auth saved, user role:', response.user.role);
+      
+      // Small delay to ensure state is saved
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      // Redirect based on user role
+      if (response.user.role === 'admin') {
+        console.log('Redirecting to admin dashboard');
+        router.push('/admin');
+      } else {
+        console.log('Redirecting to home');
+        router.push('/');
+      }
     } catch (err: any) {
+      console.error('Login error:', err);
       setError(err.message || 'Login failed');
     } finally {
       setLoading(false);
