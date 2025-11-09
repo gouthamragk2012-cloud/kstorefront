@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { supportService } from '@/lib/api';
+import { config } from '@/lib/config';
 
 interface Message {
   message_id: number;
@@ -806,7 +807,7 @@ export default function ChatWidget() {
                         setLoading(true);
                         try {
                           // Fetch order by order number
-                          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders`, {
+                          const response = await fetch(`${config.apiUrl}/orders`, {
                             headers: { Authorization: `Bearer ${token}` }
                           });
                           
