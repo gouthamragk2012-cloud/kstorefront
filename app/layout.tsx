@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import PhoneNumberBanner from '@/components/PhoneNumberBanner';
+import SupportChat from '@/components/SupportChat';
 
 export const metadata: Metadata = {
   title: {
@@ -50,6 +51,7 @@ export default function RootLayout({
         <Navbar />
         <PhoneNumberBanner />
         <main className="min-h-screen">{children}</main>
+        <SupportChat />
       </body>
     </html>
   );

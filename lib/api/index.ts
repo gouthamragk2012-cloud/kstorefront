@@ -5,3 +5,4 @@ export * from './services/cart.service';
 export * from './services/order.service';
 export * from './services/category.service';
 export * from './services/wishlist.service';
+export * from './services/support.service';
