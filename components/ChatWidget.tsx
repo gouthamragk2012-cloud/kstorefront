@@ -29,7 +29,6 @@ export default function ChatWidget() {
   const [agentConnected, setAgentConnected] = useState(false);
   const [agentTalking, setAgentTalking] = useState(false);
   const [closedMessages, setClosedMessages] = useState<Message[]>([]);
-  const [sessionEnded, setSessionEnded] = useState(false);
   
   // Use ref to track session state for immediate access
   const sessionEndedRef = useRef(false);
@@ -158,9 +157,8 @@ export default function ChatWidget() {
         const hasGoodbye = goodbyeKeywords.some(keyword => text.includes(keyword));
         
         if (hasGoodbye) {
-          // Mark session as ended (both state and ref)
+          // Mark session as ended
           sessionEndedRef.current = true;
-          setSessionEnded(true);
           setAgentConnected(false);
           setAgentTalking(false);
           
@@ -258,7 +256,6 @@ export default function ChatWidget() {
     setClosedMessages([]);
     setShowEndChatConfirm(false);
     setAgentConnected(false);
-    setSessionEnded(false);
     setIsOpen(false);
   };
   
@@ -282,7 +279,6 @@ export default function ChatWidget() {
     // Reset all states for new conversation
     sessionEndedRef.current = false;
     setClosedMessages([]);
-    setSessionEnded(false);
     setMessages([]);
     setAgentConnected(false);
     setPreviousMessageIds(new Set());

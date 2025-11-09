@@ -1,7 +1,7 @@
 'use client';
 
-import SupportChat from './SupportChat';
+import ChatWidget from './ChatWidget';
 
 export default function ClientLayout() {
-  return <SupportChat />;
+  return <ChatWidget />;
 }
