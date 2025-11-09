@@ -26,7 +26,7 @@ export default function PhoneNumberBanner() {
     setLoading(true);
 
     try {
-      await apiClient.put('/users/profile', { phone }, token);
+      await apiClient.put('/users/profile', { phone }, token || undefined);
       setShowBanner(false);
       // Refresh page to update user data
       window.location.reload();

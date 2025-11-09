@@ -8,13 +8,25 @@ export interface Product {
   short_description?: string;
   price: number;
   compare_at_price?: number;
+  cost_price?: number;
   stock_quantity: number;
+  low_stock_threshold?: number;
   category_id?: number;
   category_name?: string;
   brand?: string;
+  weight?: number;
+  dimensions?: {
+    length?: string;
+    width?: string;
+    height?: string;
+    unit?: string;
+  };
   is_featured?: boolean;
+  is_active?: boolean;
   primary_image?: string;
   image_url?: string;
+  meta_title?: string;
+  meta_description?: string;
 }
 
 export interface Category {

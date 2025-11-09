@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { apiClient } from '@/lib/api';
@@ -27,14 +27,12 @@ export default function AccountPage() {
     address_line1: '', address_line2: '', city: '', state: '', postal_code: '', country: '', is_default: false
   });
 
-  useEffect(() => { setMounted(true); }, []);
-  useEffect(() => { if (mounted && !isAuthenticated) router.push('/login'); }, [mounted, isAuthenticated, router]);
-  useEffect(() => { if (mounted && isAuthenticated && token) { loadProfile(); loadAddresses(); } }, [mounted, isAuthenticated, token]);
-
-  const loadProfile = async () => {
+  const loadProfile = useCallback(async () => {
+    if (!token) return;
+    
     try {
       setLoading(true);
-      const response: any = await apiClient.get('/users/profile', token || '');
+      const response: any = await apiClient.get('/users/profile', token);
       const data = response.data || response;
       setProfileData({
         first_name: data.first_name || '', last_name: data.last_name || '', email: data.email || '',
@@ -46,11 +44,13 @@ export default function AccountPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
 
-  const loadAddresses = async () => {
+  const loadAddresses = useCallback(async () => {
+    if (!token) return;
+    
     try {
-      const response: any = await apiClient.get('/users/addresses', token || '');
+      const response: any = await apiClient.get('/users/addresses', token);
       const addressList = Array.isArray(response.data || response) ? (response.data || response) : [];
       console.log('Loaded addresses:', addressList);
       setAddresses(addressList);
@@ -71,19 +71,39 @@ export default function AccountPage() {
         });
       }
     } catch (err: any) {
-      console.error('Failed to load addresses:', err);
+      console.debug('No addresses loaded:', err);
     }
-  };
+  }, [token]);
+
+  useEffect(() => { setMounted(true); }, []);
+  
+  useEffect(() => { 
+    if (mounted && !isAuthenticated) {
+      router.push('/login'); 
+    }
+  }, [mounted, isAuthenticated, router]);
+  
+  useEffect(() => { 
+    // Only load data when we have both authentication AND a valid token
+    console.log('Account page effect:', { mounted, isAuthenticated, hasToken: !!token });
+    if (mounted && isAuthenticated && token) { 
+      console.log('Loading profile and addresses...');
+      loadProfile(); 
+      loadAddresses(); 
+    }
+  }, [mounted, isAuthenticated, token, loadProfile, loadAddresses]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!token) return;
+    
     setError(''); setSuccess(''); setSaving(true);
     try {
       // Save profile
       await apiClient.put('/users/profile', {
         first_name: profileData.first_name, last_name: profileData.last_name, phone: profileData.phone,
         gender: profileData.gender || null, date_of_birth: profileData.date_of_birth || null
-      }, token || '');
+      }, token);
       
       // Save address if provided
       if (addressForm.address_line1 && addressForm.city && addressForm.state && addressForm.postal_code && addressForm.country) {
@@ -100,13 +120,13 @@ export default function AccountPage() {
             postal_code: addressForm.postal_code,
             country: addressForm.country,
             is_default: true
-          }, token || '');
+          }, token);
         } else {
           console.log('Creating new address');
           addressResponse = await apiClient.post('/users/addresses', {
             ...addressForm,
             is_default: true
-          }, token || '');
+          }, token);
         }
         console.log('Address save response:', addressResponse);
         
@@ -127,7 +147,9 @@ export default function AccountPage() {
 
 
 
-  if (!mounted || !isAuthenticated) return <div className="min-h-screen flex items-center justify-center"><div className="text-lg">Loading...</div></div>;
+  if (!mounted) return <div className="min-h-screen flex items-center justify-center"><div className="text-lg">Loading...</div></div>;
+  
+  if (!isAuthenticated) return <div className="min-h-screen flex items-center justify-center"><div className="text-lg">Redirecting to login...</div></div>;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 py-12">

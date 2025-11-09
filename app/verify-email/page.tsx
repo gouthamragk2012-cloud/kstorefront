@@ -76,11 +76,10 @@ export default function VerifyEmailPage() {
     setSuccess('');
 
     try {
-      await apiClient.post('/verification/verify-code', { code: verificationCode }, token);
+      await apiClient.post('/verification/verify-code', { code: verificationCode }, token || undefined);
       
       // Fetch updated user data
-      const updatedUser: any = await apiClient.get('/auth/me', token);
-      const userData = updatedUser.data || updatedUser;
+      await apiClient.get('/auth/me', token || undefined);
       
       // Update auth store with verified status
       if (typeof window !== 'undefined') {
@@ -109,7 +108,7 @@ export default function VerifyEmailPage() {
     setSuccess('');
 
     try {
-      await apiClient.post('/verification/send-code', {}, token);
+      await apiClient.post('/verification/send-code', {}, token || undefined);
       setSuccess('New verification code sent to your email!');
       setCode(['', '', '', '', '', '']);
     } catch (err: any) {
@@ -135,7 +134,7 @@ export default function VerifyEmailPage() {
             <div className="text-6xl mb-4">📧</div>
             <h1 className="text-3xl font-bold mb-2">Verify Your Email</h1>
             <p className="text-gray-600">
-              We've sent a 6-digit code to<br />
+              We&apos;ve sent a 6-digit code to<br />
               <span className="font-semibold text-gray-800">{user?.email}</span>
             </p>
           </div>
@@ -183,7 +182,7 @@ export default function VerifyEmailPage() {
 
           <div className="text-center">
             <p className="text-sm text-gray-600 mb-2">
-              Didn't receive the code?
+              Didn&apos;t receive the code?
             </p>
             <button
               onClick={handleResendCode}

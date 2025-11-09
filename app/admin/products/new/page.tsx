@@ -32,7 +32,7 @@ export default function NewProductPage() {
     category_id: '',
     brand: '',
     weight: '',
-    dimensions: { length: '', width: '', height: '', unit: 'cm' },
+    dimensions: { length: '', width: '', height: '', unit: 'cm' } as { length: string; width: string; height: string; unit: string },
     is_featured: false,
     is_active: true,
     meta_title: '',

@@ -12,6 +12,7 @@ export interface SupportMessage {
 export interface SendMessageRequest {
   message: string;
   order_id?: number;
+  skip_telegram?: boolean;
 }
 
 class SupportService {
@@ -21,7 +22,7 @@ class SupportService {
   }
 
   async getMessages(token: string): Promise<SupportMessage[]> {
-    const response = await apiClient.get('/support/messages', token);
+    const response: any = await apiClient.get('/support/messages', token);
     return response.data || response;
   }
 

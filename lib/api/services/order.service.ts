@@ -69,31 +69,30 @@ export interface StatusHistory {
 export const orderService = {
   // User endpoints
   getAll: (token: string) => 
-    apiClient.get('/orders', { headers: { Authorization: `Bearer ${token}` } }),
+    apiClient.get('/orders', token),
   
   getById: (id: number, token: string) => 
-    apiClient.get(`/orders/${id}`, { headers: { Authorization: `Bearer ${token}` } }),
+    apiClient.get(`/orders/${id}`, token),
   
   create: (data: any, token: string) => 
-    apiClient.post('/orders', data, { headers: { Authorization: `Bearer ${token}` } }),
+    apiClient.post('/orders', data, token),
   
   // Admin endpoints
-  getAllAdmin: (token: string, params?: { page?: number; per_page?: number; status?: string }) => 
-    apiClient.get('/orders/admin/all', { 
-      headers: { Authorization: `Bearer ${token}` },
-      params 
-    }),
+  getAllAdmin: (token: string, params?: { page?: number; per_page?: number; status?: string }) => {
+    const queryParams = new URLSearchParams();
+    if (params?.page) queryParams.append('page', params.page.toString());
+    if (params?.per_page) queryParams.append('per_page', params.per_page.toString());
+    if (params?.status) queryParams.append('status', params.status);
+    const query = queryParams.toString() ? `?${queryParams.toString()}` : '';
+    return apiClient.get(`/orders/admin/all${query}`, token);
+  },
   
   getByIdAdmin: (id: number, token: string) => 
-    apiClient.get(`/orders/admin/${id}`, { headers: { Authorization: `Bearer ${token}` } }),
+    apiClient.get(`/orders/admin/${id}`, token),
   
   updateStatus: (id: number, status: string, notes: string, token: string) => 
-    apiClient.put(`/orders/admin/${id}/status`, { status, notes }, { 
-      headers: { Authorization: `Bearer ${token}` } 
-    }),
+    apiClient.put(`/orders/admin/${id}/status`, { status, notes }, token),
   
   updateTracking: (id: number, tracking_number: string, token: string) => 
-    apiClient.put(`/orders/admin/${id}/tracking`, { tracking_number }, { 
-      headers: { Authorization: `Bearer ${token}` } 
-    }),
+    apiClient.put(`/orders/admin/${id}/tracking`, { tracking_number }, token),
 };

@@ -297,7 +297,7 @@ export default function AdminDashboard() {
               <div className="flex-1">
                 <h3 className="font-bold text-base sm:text-lg mb-1">Need Help?</h3>
                 <p className="text-gray-600 text-sm sm:text-base">
-                  Start by adding products to your catalog. Click the "Add Product" button above or navigate to Products section.
+                  Start by adding products to your catalog. Click the &ldquo;Add Product&rdquo; button above or navigate to Products section.
                 </p>
               </div>
               <Link href="/admin/products/new" className="w-full sm:w-auto">
