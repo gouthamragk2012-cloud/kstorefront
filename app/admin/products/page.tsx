@@ -8,6 +8,7 @@ import type { Product } from '@/lib/types';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
+import { config } from '@/lib/config';
 
 export default function AdminProductsPage() {
   const { isAdmin } = useAdmin();
@@ -167,7 +168,7 @@ export default function AdminProductsPage() {
                         <td className="p-3">
                           {product.primary_image ? (
                             <img
-                              src={`http://localhost:5000${product.primary_image}`}
+                              src={`${config.apiUrl.replace('/api', '')}${product.primary_image}`}
                               alt={product.name}
                               className="w-12 h-12 object-cover rounded"
                             />
