@@ -27,7 +27,7 @@ export default function LoginPage() {
     try {
       const response = await authService.login(formData);
       setAuth(response.user, response.access_token);
-      router.push('/products');
+      router.push('/');
     } catch (err: any) {
       setError(err.message || 'Login failed');
     } finally {
@@ -74,7 +74,7 @@ export default function LoginPage() {
             </Button>
 
             <p className="text-center text-sm text-gray-600">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link href="/register" className="text-blue-600 hover:underline">
                 Register
               </Link>

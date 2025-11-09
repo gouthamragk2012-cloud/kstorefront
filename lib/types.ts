@@ -1,17 +1,29 @@
 export interface Product {
-  id: number;
+  product_id: number;
+  id?: number; // Alias for compatibility
+  sku: string;
   name: string;
-  description: string;
+  slug: string;
+  description?: string;
+  short_description?: string;
   price: number;
+  compare_at_price?: number;
   stock_quantity: number;
-  category_id: number;
+  category_id?: number;
+  category_name?: string;
+  brand?: string;
+  is_featured?: boolean;
+  primary_image?: string;
   image_url?: string;
 }
 
 export interface Category {
-  id: number;
+  category_id: number;
+  id?: number; // Alias for compatibility
+  slug: string;
   name: string;
   description?: string;
+  is_active?: boolean;
 }
 
 export interface CartItem {

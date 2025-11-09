@@ -19,8 +19,10 @@ export default function ProductsPage() {
   useEffect(() => {
     productService
       .getAll()
-      .then((data) => {
-        setProducts(data);
+      .then((response) => {
+        // Backend returns paginated response with data array
+        const productsData = response.data || response;
+        setProducts(Array.isArray(productsData) ? productsData : []);
         setLoading(false);
       })
       .catch((err) => {
@@ -38,7 +40,7 @@ export default function ProductsPage() {
 
     try {
       const cartItem = await cartService.add(
-        { product_id: product.id, quantity: 1 },
+        { product_id: product.product_id, quantity: 1 },
         token
       );
       addItem({ ...cartItem, product });
@@ -71,17 +73,37 @@ export default function ProductsPage() {
 
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product) => (
-          <Card key={product.id} className="hover:shadow-lg transition">
-            <div className="bg-gray-200 h-48 rounded-t-lg"></div>
+          <Card key={product.product_id} className="hover:shadow-lg transition">
+            {product.primary_image ? (
+              <img
+                src={product.primary_image}
+                alt={product.name}
+                className="h-48 w-full object-cover rounded-t-lg"
+              />
+            ) : (
+              <div className="bg-gray-200 h-48 rounded-t-lg flex items-center justify-center">
+                <span className="text-gray-400">No Image</span>
+              </div>
+            )}
             <CardBody>
               <h3 className="font-semibold mb-2 text-lg">{product.name}</h3>
               <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                {product.description}
+                {product.short_description || product.description}
               </p>
+              {product.brand && (
+                <p className="text-xs text-gray-500 mb-2">{product.brand}</p>
+              )}
               <div className="flex justify-between items-center mb-4">
-                <p className="text-xl font-bold text-blue-600">
-                  ${product.price.toFixed(2)}
-                </p>
+                <div>
+                  <p className="text-xl font-bold text-blue-600">
+                    ${product.price.toFixed(2)}
+                  </p>
+                  {product.compare_at_price && (
+                    <p className="text-sm text-gray-400 line-through">
+                      ${product.compare_at_price.toFixed(2)}
+                    </p>
+                  )}
+                </div>
                 <span className="text-sm text-gray-500">
                   Stock: {product.stock_quantity}
                 </span>

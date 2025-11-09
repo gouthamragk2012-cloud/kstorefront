@@ -6,6 +6,7 @@ export interface ProductFilters {
   min_price?: number;
   max_price?: number;
   search?: string;
+  is_featured?: boolean;
 }
 
 export const productService = {
@@ -17,7 +18,7 @@ export const productService = {
       });
     }
     const query = params.toString() ? `?${params.toString()}` : '';
-    return apiClient.get<Product[]>(`/products${query}`);
+    return apiClient.get<any>(`/products${query}`);
   },
 
   getById: (id: number) =>

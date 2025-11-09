@@ -29,7 +29,7 @@ export default function RegisterPage() {
     try {
       const response = await authService.register(formData);
       setAuth(response.user, response.access_token);
-      router.push('/products');
+      router.push('/');
     } catch (err: any) {
       setError(err.message || 'Registration failed');
     } finally {
