@@ -1,6 +1,6 @@
 'use client';
 
-import SupportChat from '@/components/SupportChat';
+import ChatWidget from '@/components/ChatWidget';
 
 export default function SupportPage() {
   return (
@@ -13,7 +13,7 @@ export default function SupportPage() {
           <p className="text-gray-600 text-lg">We're here to help you!</p>
         </div>
         
-        <SupportChat />
+        <ChatWidget />
       </div>
     </div>
   );
