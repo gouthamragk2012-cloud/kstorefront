@@ -42,8 +42,12 @@ export interface Order {
 }
 
 export interface User {
-  id: number;
+  user_id: number;
+  id?: number; // Alias
   email: string;
   first_name: string;
   last_name: string;
+  role: 'customer' | 'admin';
+  phone?: string;
+  is_verified?: boolean;
 }
